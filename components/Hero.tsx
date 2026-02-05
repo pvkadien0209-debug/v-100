@@ -24,7 +24,7 @@ export default function Hero() {
           }
         })
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 } // Giảm threshold để trigger sớm hơn khi scroll
     )
 
     observer.observe(video)
@@ -109,13 +109,19 @@ export default function Hero() {
               <div className="aspect-[9/16] bg-gradient-primary rounded-[40px] p-4 shadow-2xl relative overflow-hidden">
                 <div className="absolute inset-4 bg-black rounded-[32px] overflow-hidden">
                   <div className="relative h-full group">
+                    {/* Video với các attributes để ngăn full screen */}
                     <video
                       ref={videoRef}
                       loop
                       muted
                       playsInline
-                      className="absolute inset-0 w-full h-full object-cover"
+                      webkit-playsinline="true"
+                      x5-playsinline="true"
+                      x5-video-player-type="h5"
+                      x5-video-player-fullscreen="false"
+                      className="absolute inset-0 w-full h-full object-cover [&::-webkit-media-controls-fullscreen-button]:hidden"
                       onClick={togglePlay}
+                      style={{ pointerEvents: 'auto' }}
                     >
                       <source src="/videos/videoLead.mp4" type="video/mp4" />
                     </video>
@@ -149,18 +155,20 @@ export default function Hero() {
                       </motion.div>
                     )}
                     
+                    {/* Nội dung mô tả video - đã chỉnh sửa */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-10 pointer-events-none">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
                           <div className="w-10 h-10 rounded-full bg-primary" />
-                          <div className="font-semibold text-white text-sm">@chuyengia_phanbon</div>
+                          <div className="font-semibold text-white text-sm">@chuyengia_tiktok</div>
                         </div>
                         <p className="text-white text-xs leading-relaxed">
-                          7 dấu hiệu cây thiếu đạm bạn cần biết ngay! 🌱 #chuyengia #phanbon #nongnghiep
+                          Bạn đang cần xây dựng kênh TikTok chuyên nghiệp? 🚀 Giải pháp toàn diện cho người bận rộn! #tiktokmarketing #personalbranding #chuyengia
                         </p>
                       </div>
                     </div>
 
+                    {/* Social buttons */}
                     <div className="absolute right-2 bottom-20 space-y-4 z-10 pointer-events-none">
                       <div className="flex flex-col items-center gap-1">
                         <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
@@ -185,6 +193,7 @@ export default function Hero() {
                 </div>
               </div>
 
+              {/* Floating stats */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
