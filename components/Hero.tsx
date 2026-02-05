@@ -1,12 +1,35 @@
 'use client'
-
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Play, Pause, Sparkles, Volume2 } from 'lucide-react'
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play()
+              .then(() => setIsPlaying(true))
+              .catch((error) => console.log('Autoplay prevented:', error))
+          } else {
+            video.pause()
+            setIsPlaying(false)
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [])
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -21,19 +44,16 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Decorative Background Elements */}
       <div className="decorative-circle w-[600px] h-[600px] -top-32 -right-32 animate-float" />
       <div className="decorative-circle w-[400px] h-[400px] bottom-0 -left-20" style={{ animationDelay: '2s' }} />
       
       <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -44,19 +64,15 @@ export default function Hero() {
               <span className="text-sm font-medium text-primary">Chuyên nghiệp - Bài bản - Hiệu quả</span>
             </motion.div>
 
-            {/* Main Heading */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               className="text-5xl lg:text-7xl font-display font-bold leading-tight mb-6"
             >
-              Dịch vụ sản xuất{' '}
-              <span className="gradient-text">& quản lý video TikTok</span>{' '}
-              xây dựng thương hiệu cá nhân
+              Dịch vụ sản xuất <span className="gradient-text">& quản lý video TikTok</span> xây dựng thương hiệu cá nhân
             </motion.h1>
 
-            {/* Subtitle */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -66,103 +82,49 @@ export default function Hero() {
               Dành riêng cho <strong className="text-primary">luật sư – bác sĩ – dược sĩ – chuyên gia</strong> đang muốn phát triển hình ảnh cá nhân bài bản trên TikTok.
             </motion.p>
 
-            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
               className="flex flex-wrap gap-4"
             >
-              <a
-                href="#contact"
-                className="btn-gradient text-white px-8 py-4 rounded-full flex items-center gap-2 text-lg font-semibold"
-              >
+              <a href="#contact" className="btn-gradient text-white px-8 py-4 rounded-full flex items-center gap-2 text-lg font-semibold">
                 Nhận tư vấn miễn phí
                 <ArrowRight size={20} />
               </a>
-              <a
-                href="#pricing"
-                className="bg-white border-2 border-primary text-primary px-8 py-4 rounded-full flex items-center gap-2 text-lg font-semibold hover:bg-bg-soft transition-colors"
-              >
+              <a href="#pricing" className="bg-white border-2 border-primary text-primary px-8 py-4 rounded-full flex items-center gap-2 text-lg font-semibold hover:bg-bg-soft transition-colors">
                 <Play size={20} />
                 Xem bảng giá
               </a>
             </motion.div>
-
-            {/* Stats */}
-            {/* <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="grid grid-cols-3 gap-8 mt-16 pt-8 border-t border-gray-200"
-            >
-              <div>
-                <div className="text-4xl font-display font-bold gradient-text">500+</div>
-                <div className="text-sm text-gray-600 mt-1">Video sản xuất</div>
-              </div>
-              <div>
-                <div className="text-4xl font-display font-bold gradient-text">100+</div>
-                <div className="text-sm text-gray-600 mt-1">Khách hàng</div>
-              </div>
-              <div>
-                <div className="text-4xl font-display font-bold gradient-text">10M+</div>
-                <div className="text-sm text-gray-600 mt-1">Lượt tiếp cận</div>
-              </div>
-            </motion.div> */}
           </motion.div>
 
-          {/* Right Visual */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
             className="relative"
           >
-            {/* TikTok Phone Mockup */}
             <div className="relative mx-auto w-[350px] lg:w-[400px]">
               <div className="aspect-[9/16] bg-gradient-primary rounded-[40px] p-4 shadow-2xl relative overflow-hidden">
-                {/* Mock TikTok Interface */}
                 <div className="absolute inset-4 bg-black rounded-[32px] overflow-hidden">
                   <div className="relative h-full group">
-                    {/* 
-                      🎥 VIDEO CỦA BẠN 
-                      ==========================================
-                      Đặt file videoLead.mp4 vào đường dẫn:
-                      public/videos/videoLead.mp4
-                      
-                      Cấu trúc folder:
-                      tiktok-brand-service/
-                      └── public/
-                          └── videos/
-                              └── videoLead.mp4  👈 ĐẶT VIDEO VÀO ĐÂY
-                      
-                      Yêu cầu video:
-                      - Tên file: videoLead.mp4 (chính xác)
-                      - Format: MP4
-                      - Tỷ lệ: 9:16 (TikTok vertical)
-                      - Độ phân giải: 1080x1920px
-                    */}
                     <video
                       ref={videoRef}
                       loop
+                      muted
                       playsInline
                       className="absolute inset-0 w-full h-full object-cover"
                       onClick={togglePlay}
                     >
                       <source src="/videos/videoLead.mp4" type="video/mp4" />
                     </video>
-
-                    {/* Play/Pause Button Overlay */}
-                    <div 
-                      className="absolute inset-0 flex items-center justify-center cursor-pointer z-20"
-                      onClick={togglePlay}
-                    >
+                    
+                    <div className="absolute inset-0 flex items-center justify-center cursor-pointer z-20" onClick={togglePlay}>
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className={`transition-opacity duration-300 ${
-                          isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
-                        }`}
+                        className={`transition-opacity duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}
                       >
                         <div className="w-20 h-20 rounded-full bg-white/90 backdrop-blur flex items-center justify-center shadow-2xl hover:bg-white transition-colors">
                           {isPlaying ? (
@@ -174,7 +136,6 @@ export default function Hero() {
                       </motion.div>
                     </div>
 
-                    {/* Audio Indicator */}
                     {isPlaying && (
                       <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -188,7 +149,6 @@ export default function Hero() {
                       </motion.div>
                     )}
                     
-                    {/* TikTok UI Elements */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-10 pointer-events-none">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
@@ -201,7 +161,6 @@ export default function Hero() {
                       </div>
                     </div>
 
-                    {/* Right sidebar */}
                     <div className="absolute right-2 bottom-20 space-y-4 z-10 pointer-events-none">
                       <div className="flex flex-col items-center gap-1">
                         <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
@@ -226,7 +185,6 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Floating Cards */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
@@ -249,7 +207,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
