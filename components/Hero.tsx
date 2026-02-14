@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Play, Pause, Sparkles, Volume2 } from 'lucide-react'
 
@@ -7,48 +7,27 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
 
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            video.play()
-              .then(() => setIsPlaying(true))
-              .catch((error) => console.log('Autoplay prevented:', error))
-          } else {
-            video.pause()
-            setIsPlaying(false)
-          }
-        })
-      },
-      { threshold: 0.3 } // Giảm threshold để trigger sớm hơn khi scroll
-    )
-
-    observer.observe(video)
-    return () => observer.disconnect()
-  }, [])
-
   const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause()
+        setIsPlaying(false)
       } else {
         videoRef.current.play()
+        setIsPlaying(true)
       }
-      setIsPlaying(!isPlaying)
     }
   }
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden pt-20">
+      {/* ... giữ nguyên decorative circles ... */}
       <div className="decorative-circle w-[600px] h-[600px] -top-32 -right-32 animate-float" />
       <div className="decorative-circle w-[400px] h-[400px] bottom-0 -left-20" style={{ animationDelay: '2s' }} />
-      
+
       <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left column - giữ nguyên */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -63,7 +42,6 @@ export default function Hero() {
               <Sparkles size={16} className="text-primary" />
               <span className="text-sm font-medium text-primary">Chuyên nghiệp - Bài bản - Hiệu quả</span>
             </motion.div>
-
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -72,7 +50,6 @@ export default function Hero() {
             >
               Dịch vụ sản xuất <span className="gradient-text">& quản lý video TikTok</span> xây dựng thương hiệu cá nhân
             </motion.h1>
-
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -81,7 +58,6 @@ export default function Hero() {
             >
               Dành riêng cho <strong className="text-primary">luật sư – bác sĩ – dược sĩ – chuyên gia</strong> đang muốn phát triển hình ảnh cá nhân bài bản trên TikTok.
             </motion.p>
-
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -99,6 +75,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
+          {/* Right column - Video */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -109,23 +86,18 @@ export default function Hero() {
               <div className="aspect-[9/16] bg-gradient-primary rounded-[40px] p-4 shadow-2xl relative overflow-hidden">
                 <div className="absolute inset-4 bg-black rounded-[32px] overflow-hidden">
                   <div className="relative h-full group">
-                    {/* Video với các attributes để ngăn full screen */}
                     <video
                       ref={videoRef}
                       loop
-                      muted
                       playsInline
-                      webkit-playsinline="true"
-                      x5-playsinline="true"
-                      x5-video-player-type="h5"
-                      x5-video-player-fullscreen="false"
                       className="absolute inset-0 w-full h-full object-cover [&::-webkit-media-controls-fullscreen-button]:hidden"
                       onClick={togglePlay}
                       style={{ pointerEvents: 'auto' }}
                     >
                       <source src="/videos/videoLead.mp4" type="video/mp4" />
                     </video>
-                    
+
+                    {/* Play/Pause button */}
                     <div className="absolute inset-0 flex items-center justify-center cursor-pointer z-20" onClick={togglePlay}>
                       <motion.div
                         initial={{ scale: 0 }}
@@ -154,8 +126,8 @@ export default function Hero() {
                         </div>
                       </motion.div>
                     )}
-                    
-                    {/* Nội dung mô tả video - đã chỉnh sửa */}
+
+                    {/* Bottom overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-10 pointer-events-none">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
@@ -202,7 +174,6 @@ export default function Hero() {
                 <div className="text-xs text-gray-500 mb-1">Lượt xem</div>
                 <div className="text-2xl font-bold gradient-text">245K</div>
               </motion.div>
-
               <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 3, repeat: Infinity, delay: 1 }}
@@ -216,6 +187,7 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
