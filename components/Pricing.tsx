@@ -7,7 +7,7 @@ export default function Pricing() {
   const packages = [
     {
       name: 'GÓI CƠ BẢN',
-      price: '15 triệu',
+      // price: '15 triệu',
       icon: Star,
       color: 'from-green-500 to-emerald-500',
       features: [
@@ -22,7 +22,7 @@ export default function Pricing() {
     },
     {
       name: 'GÓI TRUNG CẤP',
-      price: '25 triệu',
+      // price: '25 triệu',
       icon: Zap,
       color: 'from-yellow-500 to-orange-500',
       features: [
@@ -37,7 +37,7 @@ export default function Pricing() {
     },
     {
       name: 'GÓI CAO CẤP',
-      price: '40 triệu',
+      // price: '40 triệu',
       icon: Crown,
       color: 'from-purple-500 to-pink-500',
       features: [
@@ -71,7 +71,7 @@ export default function Pricing() {
             100 VIDEO / GÓI
           </div>
           <h2 className="text-5xl lg:text-6xl font-display font-bold mb-6">
-            Bảng giá <span className="gradient-text">rõ ràng</span>
+            Các gói <span className="gradient-text">chi tiết</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Chọn gói phù hợp với mức độ xuất hiện và ngân sách của bạn
@@ -107,8 +107,8 @@ export default function Pricing() {
               
               {/* Price */}
               <div className="text-center mb-8">
-                <div className="text-5xl font-bold gradient-text mb-2">{pkg.price}</div>
-                <div className="text-sm text-gray-500">Cho 100 video TikTok</div>
+                {/* <div className="text-5xl font-bold gradient-text mb-2">{pkg.price}</div> */}
+                {/* <div className="text-sm text-gray-500">Cho 100 video TikTok</div> */}
               </div>
 
               {/* Features */}
@@ -151,7 +151,7 @@ export default function Pricing() {
             href="tel:0918284482"
             className="inline-flex items-center gap-2 btn-gradient text-white px-8 py-4 rounded-full font-bold text-lg"
           >
-            📞 Gọi ngay: 0918 284 482
+            📞 Gọi ngay hoặc Zalo: 0918 284 482
           </a>
         </motion.div>
 

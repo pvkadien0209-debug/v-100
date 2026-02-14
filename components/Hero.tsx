@@ -94,7 +94,7 @@ export default function Hero() {
               </a>
               <a href="#pricing" className="bg-white border-2 border-primary text-primary px-8 py-4 rounded-full flex items-center gap-2 text-lg font-semibold hover:bg-bg-soft transition-colors">
                 <Play size={20} />
-                Xem bảng giá
+                Xem các gói
               </a>
             </motion.div>
           </motion.div>

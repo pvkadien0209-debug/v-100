@@ -18,11 +18,11 @@ export default function Contact() {
             Liên hệ <span className="gradient-text">với chúng tôi</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Sẵn sàng xây dựng thương hiệu cá nhân trên TikTok? Hãy liên hệ ngay để được tư vấn miễn phí!
+            Sẵn sàng xây dựng thương hiệu cá nhân trên TikTok? Hãy liên hệ ngay để được tư vấn miễn phí! Qua điện thoại hoặc zalo 0918284482
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-12" style={{display:"none"}}>
           {/* Left: Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}

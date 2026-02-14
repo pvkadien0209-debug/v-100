@@ -40,7 +40,7 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             className="text-2xl font-display font-bold gradient-text"
           >
-            V-100
+            KD100
           </motion.div>
 
           {/* Desktop Menu */}
